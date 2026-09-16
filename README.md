@@ -16,9 +16,17 @@
 
 ## 发新版的方法（作者用）
 
-版本号 +1 → 重新打包 → 在 Releases 里新建一个版本 → 上传两个文件：
+1. 版本号 +1：改 `desktop\package.json` 里的 `version`
+2. 重新打包：在 `desktop` 目录执行 `npm run dist`
+3. 在 Releases 里新建一个版本，Tag 填 `v新版本号`，标题随意
+4. 上传**三个**文件（第三个最容易漏，别漏）：
 
 - `desktop\release\RecyclePointsCalculator-Setup-新版本号.exe`
 - `desktop\release\latest.yml`
+- `desktop\release\RecyclePointsCalculator-Setup-新版本号.exe.blockmap`
 
-注意：文件名必须是英文（GitHub 会把附件名里的中文自动去掉，导致程序找不到更新包）。
+上传后确认这个版本是「Latest / 最新版本」。
+
+> 为什么要有第三个文件：带上 `.blockmap`，用户更新时**只下载变动的部分**（通常只有几百 KB），而不是整个 117MB。实测 1.0.0 → 1.0.1 只需 377KB。万一漏传，程序会自动退回整包下载，不会出错。
+
+> 文件名必须是英文：GitHub 会把附件名里的中文自动去掉，导致程序找不到更新包。
